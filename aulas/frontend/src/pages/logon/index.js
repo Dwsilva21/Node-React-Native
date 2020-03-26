@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FiLogIn } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 import api from '../../services/api';
 
@@ -12,17 +12,23 @@ import LogoImg from '../../assets/logo.svg'
 
 export default function Logon() {
 
-    const [ id, setId ] = useState('0');
+    const [ id, setId ] = useState('');
+    const history = useHistory();
 
     async function handleLogin(e)
     {
         e.preventDefault();
  
         try {
-            const response = await api.get(`/ongs/${id}`) ;
-            console.log( response.data );
+            const response = await api.post('/session',{ id } ) ;
+
+            //const response = await api.get(`/ongs/${id}`) ;
+            console.log( response.data.name );
             
-             
+            localStorage.setItem('ongId', id );
+            localStorage.setItem('ongName', response.data.name);
+            
+            history.push('/profile');
     
         } catch (err) {
             alert('Erro ONG não cadastrada!');
