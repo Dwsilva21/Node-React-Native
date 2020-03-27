@@ -12,6 +12,7 @@ routes.get('/ongs/:id', OngControl.getOne);
 
 routes.post('/incs', IncControl.create);
 routes.get('/incs', IncControl.getAll);
+routes.get('/incs2', IncControl.getAll2);
 routes.get('/incs/:id', IncControl.getOne);
 routes.delete('/incs/:id', IncControl.delOne);
 

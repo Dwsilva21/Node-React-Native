@@ -31,6 +31,18 @@ async getAll( request, response ) {
    return response.json(incs);
 },
 
+async getAll2( request, response ) {
+  
+    const [count] =  await conn('incidents').count();
+    response.header('X-Total-Count', count['count(*)']);
+ 
+    const incs =  await conn('incidents')
+    .join('ongs','ongs.id','=','incidents.ong_id')
+    .select(['incidents.*' , 'ongs.name', 'ongs.email', 'ongs.whatsapp', 'ongs.city', 'ongs.uf']);
+     
+    return response.json(incs);
+ },
+ 
 async getOne( request, response) {
     const incs =  await conn('incidents').select('*').where('id',request.params.id);
     console.log(request.params.id);

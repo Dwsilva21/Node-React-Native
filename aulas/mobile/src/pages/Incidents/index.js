@@ -21,12 +21,10 @@ export default function Incidents() {
     }
 
     async function loadIncidents(){
-        const response = await api.get('incs/22');
+        const response = await api.get('incs2');
         setIncidents(response.data); 
 
-        console.log('ok');
-        console.log(response.data);
-    }
+   }
 
     useEffect( ()=>{
          
