@@ -19,9 +19,10 @@ export default function Incidents() {
     const [loading, setLoading] = useState(false);
 
 
-    const [cnt, setCnt] = useState(1);
-    function somaUm() {
-        return (   setCnt( cnt + 1 ) );
+    const [cnt, setCnt] = useState(0);
+
+    function somaUm(numero) {
+        return (  setCnt( cnt + numero ) );
     }
 
     function navigateToDetail(incident){
@@ -33,7 +34,7 @@ export default function Incidents() {
             return;
         }
         
-        if ( total > 0 && incidents.length == total ){
+        if ( total > 0 && incidents.length >= total ){
             return;
         }
 
@@ -43,7 +44,7 @@ export default function Incidents() {
             Params: {page}
         });
         
-        setIncidents([...incidents, ...response.data]); 
+        setIncidents(response.data); 
         setTotal( response.headers['x-total-count'] );
         setPage( page + 1);
         setLoading(false);
@@ -56,12 +57,12 @@ export default function Incidents() {
     }, []);
 
 
-    return (
+    return ( 
  
         <View style={styles.container}>
             <View style={styles.header}>
                 <Image source={logoImg}/>
-                <Text style={styles.headerText}>{ cnt } 
+                <Text style={styles.headerText}>  
                     Total de <Text style={styles.headerTextBold}> {total} casos.</Text>
                 </Text>
             </View>
@@ -71,7 +72,8 @@ export default function Incidents() {
 
             <FlatList
                 data={incidents}
-                style={styles.incidentList}
+                style={styles.incidentList} 
+                key={ incidents.id } 
                 keyExtractor={ incident => incidents.id } 
                 showsVerticalScrollIndicator={true} 
                 onEndReached={loadIncidents}
@@ -79,7 +81,7 @@ export default function Incidents() {
                 renderItem={ ( {item: incident})=> (
                 <View style={styles.incident}>
 
-                    <Text style={styles.incidentProperty}>ONG:</Text>
+                <Text style={styles.incidentProperty}>ONG:</Text>
                     <Text style={styles.incidentValue}>{ incident.title }</Text>
 
                     <Text style={styles.incidentProperty}>Caso:</Text>
@@ -97,7 +99,7 @@ export default function Incidents() {
                         <Text style={styles.detailsButtonText}>Ver mais detalhes</Text>
                         <Feather name="arrow-right" size={16} color="#e02041" />
                     </TouchableOpacity>
-
+<Text>CNT{ page }</Text>
                 </View>
                 )}
              />   
