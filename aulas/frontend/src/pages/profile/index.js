@@ -19,7 +19,7 @@ export default function Profile() {
    async function handleDelete(id)
    {
       try {
-        const response = await api.delete(`/incs/${id}`, { 
+          await api.delete(`/incs/${id}`, { 
          headers: { 
             Authorization: ongId ,
          } 
